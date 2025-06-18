@@ -46,6 +46,9 @@ public class User implements BaseDAO {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -54,6 +57,9 @@ public class User implements BaseDAO {
     }
 
     public void setEmail(String email) {
+         if (email == null || !email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,}$")) {
+            throw new IllegalArgumentException("Email inválido.");
+        }
         this.email = email;
     }
 
@@ -62,6 +68,9 @@ public class User implements BaseDAO {
     }
 
     public void setCelular(String celular) {
+        if (celular == null || !celular.matches("^\\+?[0-9]{10,13}$")) {
+            throw new IllegalArgumentException("Celular inválido. Deve conter entre 10 e 13 dígitos.");
+        }
         this.celular = celular;
     }
 
@@ -70,6 +79,24 @@ public class User implements BaseDAO {
     }
 
     public void setSenha(String senha) {
+        if (senha == null || senha.trim().isEmpty()) {
+            throw new IllegalArgumentException("Senha não pode ser nula ou vazia");
+        }
+        if (senha.length() < 8) {
+            throw new IllegalArgumentException("Senha deve ter pelo menos 8 caracteres");
+        }
+        if (!senha.matches(".*[A-Z].*")) {
+            throw new IllegalArgumentException("Senha deve conter pelo menos uma letra maiúscula");
+        }
+        if (!senha.matches(".*[a-z].*")) {
+            throw new IllegalArgumentException("Senha deve conter pelo menos uma letra minúscula");
+        }
+        if (!senha.matches(".*\\d.*")) {
+            throw new IllegalArgumentException("Senha deve conter pelo menos um dígito");
+        }
+        if (!senha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
+            throw new IllegalArgumentException("Senha deve conter pelo menos um caractere especial");
+        }
         this.senha = senha;
     }
 
