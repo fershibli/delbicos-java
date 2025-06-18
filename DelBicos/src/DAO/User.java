@@ -9,53 +9,60 @@ import java.util.List;
 /**
  *
  * @author Alunos
+ * 
+ * Baseado na tabela:
+ * CREATE TABLE USERS (
+ *   ID INT AUTO_INCREMENT PRIMARY KEY,
+ *   FULL_NAME VARCHAR(100) NOT NULL,
+ *   EMAIL VARCHAR(100) UNIQUE NOT NULL,
+ *   PHONE VARCHAR(13) UNIQUE NOT NULL,
+ *   PASSWORD VARCHAR(255) NOT NULL,
+ *   ACTIVE BOOLEAN DEFAULT TRUE,
+ *   INDEX ACTIVE_INDEX_USERS (ACTIVE)
+ * );
  */
 public class User implements BaseDAO {
-    final String tableName = "USUARIOS";
-    private String login;
+    final String tableName = "USERS";
+    private int id;
+    private String nome;
+    private String email;
+    private String celular;
     private String senha;
-    private int idCli;
-    private String numAgencia;
-    private String numConta;
+    private boolean ativo;
 
     public User() {
     }
 
-    public User(String login, String senha, int idCli) {
-        this.login = login;
-        this.senha = senha;
-        this.idCli = idCli;
+    public int getId() {
+        return id;
     }
 
-    private boolean validaLogin(String login) {
-        return login != null && login.trim().length() > 3 && login.length() <= 20;
-    }
-
-    private boolean validaSenha(String senha) {
-        return senha != null && senha.trim().length() > 5 && senha.length() <= 20;
-    }
-
-    private boolean validaIdCli(int idCli) {
-        return idCli > 0;
+    public void setId(int id) {
+        this.id = id;
     }
     
-    private boolean validaNumAgencia(String numAgencia) {
-        return numAgencia != null && numAgencia.trim().length() > 0 && numAgencia.length() <= 5;
+    public String getNome() {
+        return nome;
     }
 
-    private boolean validaNumConta(String numConta) {
-        return numConta != null && numConta.trim().length() > 0 && numConta.length() <= 10;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        if (!validaLogin(login)) {
-            throw new IllegalArgumentException("Login inválido. Deve ter mais de 3 caracteres");
-        }
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     public String getSenha() {
@@ -63,43 +70,15 @@ public class User implements BaseDAO {
     }
 
     public void setSenha(String senha) {
-        if (!validaSenha(senha)) {
-            throw new IllegalArgumentException("Senha inválida. Deve ter mais de 5 caracteres");
-        }
         this.senha = senha;
     }
 
-    public int getIdCli() {
-        return idCli;
+    public boolean isAtivo() {
+        return ativo;
     }
 
-    public void setIdCli(int idCli) {
-        if (!validaIdCli(idCli)) {
-            throw new IllegalArgumentException("ID do cliente inválido. Deve ser maior que 0.");
-        }
-        this.idCli = idCli;
-    }
-    
-    public String getNumAgencia() {
-        return numAgencia;
-    }
-
-    public void setNumAgencia(String numAgencia) {
-        if (!validaNumAgencia(numAgencia)) {
-            throw new IllegalArgumentException("Número da agência inválido");
-        }
-        this.numAgencia = numAgencia;
-    }
-
-    public String getNumConta() {
-        return numConta;
-    }
-
-    public void setNumConta(String numConta) {
-        if (!validaNumConta(numConta)) {
-            throw new IllegalArgumentException("Número da conta inválido");
-        }
-        this.numConta = numConta;
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override
@@ -110,36 +89,42 @@ public class User implements BaseDAO {
     @Override
     public String dadosSQLValues() {
         return "'"
-            + this.getIdCli() + "','"
-            + this.getSenha() + "', "
-            + this.getNumAgencia() + ","
-            + this.getNumConta();
+            + this.getId() + "','"
+            + this.getNome() + "', "
+            + this.getEmail() + ","
+            + this.getCelular()+ ","
+            + this.getSenha()+ ","          
+            + this.isAtivo();
     }
 
     @Override
     public String alteraDadosSQLValues() {
-        return "SENHA = '" + this.getSenha() + "', "
-            + "NUM_AGE = " + this.getNumAgencia() + ", "
-            + "NUM_CC = " + this.getNumConta();
+        return "FULL_NAME = '" + this.getNome() + "', "
+            + "EMAIL = " + this.getEmail() + ", "
+            + "PHONE = " + this.getCelular()+ ", "
+            + "PASSWORD = " + this.getSenha() + ", "
+            + "ACTIVE = " + this.isAtivo();
     }
 
     @Override
     public String termoSQLWhereById() {
-        return "ID_CLI = " + this.getIdCli();
+        return "ID = " + this.getId();
     }
 
     @Override
     public String consultaSQLValues() {
-        return "SENHA, NUM_AGE, NUM_CC";
+        return "FULL_NAME, EMAIL, PHONE, PASSWORD, ACTIVE";
     }
 
     @Override
     public void importaSQLValues(List<String> dados) {
-        if (dados.size() != 3) {
+        if (dados.size() != 5) {
             throw new IllegalArgumentException("Número de dados inválido. Esperado 3 dados.");
         }
-        this.setSenha(dados.get(0));
-        this.setNumAgencia(dados.get(1));
-        this.setNumConta(dados.get(2));
+        this.setNome(dados.get(0));
+        this.setEmail(dados.get(1));
+        this.setCelular(dados.get(2));
+        this.setSenha(dados.get(3));
+        this.setAtivo(dados.get(4).toUpperCase().equals("TRUE") || dados.get(4).equals("1"));
     }
 }
