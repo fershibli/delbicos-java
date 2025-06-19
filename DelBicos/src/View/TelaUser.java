@@ -31,7 +31,7 @@ public class TelaUser extends javax.swing.JFrame {
         if (operacaoAtiva.equals(operacao)) {
             this.setAllVisible(true);
             labelId.setVisible(false);
-            idCliente.setVisible(false);
+            idUsuario.setVisible(false);
         }
         
         operacao = "Alterar";
@@ -39,7 +39,7 @@ public class TelaUser extends javax.swing.JFrame {
         if (operacaoAtiva.equals(operacao) || operacaoAtiva.equals(operacaoExcluir)) {
             this.setAllVisible(false);
             labelId.setVisible(true); 
-            idCliente.setVisible(true);
+            idUsuario.setVisible(true);
             
             buttonCadastrar.setVisible(true);
             buttonCadastrar.setText("Pesquisar");
@@ -51,7 +51,7 @@ public class TelaUser extends javax.swing.JFrame {
     
     private void setAllVisible(Boolean visible){
         this.labelId.setVisible(visible);
-        this.idCliente.setVisible(visible);
+        this.idUsuario.setVisible(visible);
         this.labelNome.setVisible(visible);
         this.nomeCliente.setVisible(visible);
         this.labelEmail.setVisible(visible);
@@ -68,7 +68,7 @@ public class TelaUser extends javax.swing.JFrame {
     
     private void setAllEnabled(Boolean enabled){
         this.labelId.setEnabled(enabled);
-        this.idCliente.setEnabled(enabled);
+        this.idUsuario.setEnabled(enabled);
         this.labelNome.setEnabled(enabled);
         this.nomeCliente.setEnabled(enabled);
         this.labelEmail.setEnabled(enabled);
@@ -99,7 +99,7 @@ public class TelaUser extends javax.swing.JFrame {
 
         labelId = new javax.swing.JLabel();
         labelSenha = new javax.swing.JLabel();
-        idCliente = new javax.swing.JTextField();
+        idUsuario = new javax.swing.JTextField();
         labelConfirma = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
         buttonCadastrar = new javax.swing.JToggleButton();
@@ -122,6 +122,12 @@ public class TelaUser extends javax.swing.JFrame {
 
         labelSenha.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         labelSenha.setText("Senha:");
+
+        idUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idUsuarioActionPerformed(evt);
+            }
+        });
 
         labelConfirma.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         labelConfirma.setText("Confirma Senha:");
@@ -190,7 +196,7 @@ public class TelaUser extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(labelId)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(idUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
@@ -224,7 +230,7 @@ public class TelaUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonVoltar)
                     .addComponent(labelId)
-                    .addComponent(idCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(idUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,7 +273,7 @@ public class TelaUser extends javax.swing.JFrame {
             this.novoUsuario.setNumConta(this.contaCliente.getText());
             this.novoUsuario.setNumAgencia(this.agenciaCliente.getText());
             this.novoUsuario.setSenha(new String(this.senhaUsuario.getPassword()));
-            this.novoUsuario.setIdCli(Integer.parseInt(this.idCliente.getText()));
+            this.novoUsuario.setIdCli(Integer.parseInt(this.idUsuario.getText()));
             
             connectDAO connDAO = new connectDAO();
             connDAO.connectDB();
@@ -280,7 +286,7 @@ public class TelaUser extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
         
-        TelaMenu telaMenu = new TelaMenu();
+        TelaMenuPrincipal telaMenu = new TelaMenuPrincipal();
         telaMenu.setVisible(true);
         this.setVisible(false);
         this.dispose();
@@ -299,7 +305,7 @@ public class TelaUser extends javax.swing.JFrame {
     }//GEN-LAST:event_verificaSenha
 
     private void voltarTelaMenu(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarTelaMenu
-        TelaMenu telaMenu = new TelaMenu();
+        TelaMenuPrincipal telaMenu = new TelaMenuPrincipal();
         telaMenu.setVisible(true);
         this.setVisible(false);
         this.dispose();
@@ -308,6 +314,10 @@ public class TelaUser extends javax.swing.JFrame {
     private void ativoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ativoUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ativoUsuarioActionPerformed
+
+    private void idUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -359,7 +369,7 @@ public class TelaUser extends javax.swing.JFrame {
     private javax.swing.JPasswordField confirmaSenha;
     private javax.swing.JTextField emailUsuario;
     private javax.swing.JLabel errorLabel;
-    private javax.swing.JTextField idCliente;
+    private javax.swing.JTextField idUsuario;
     private javax.swing.JLabel labelAtivo;
     private javax.swing.JLabel labelCelular;
     private javax.swing.JLabel labelConfirma;
