@@ -4,6 +4,8 @@
  */
 package delbicos;
 
+import View.TelaMenuPrincipal;
+
 /**
  *
  * @author Alunos
@@ -14,7 +16,8 @@ public class DelBicos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        TelaMenuPrincipal telaInicial = new TelaMenuPrincipal();
+        telaInicial.setVisible(true);
     }
     
 }
