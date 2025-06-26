@@ -86,16 +86,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Edita Usu&#xe1;rio"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditUserActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRemoveUser">
       <Properties>
         <Property name="text" type="java.lang.String" value="Remove Usu&#xe1;rio"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRemoveUserActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSelectUser">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lista Usu&#xe1;rios"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSelectUserActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

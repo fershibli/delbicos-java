@@ -46,10 +46,25 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         });
 
         jButtonEditUser.setText("Edita Usuário");
+        jButtonEditUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditUserActionPerformed(evt);
+            }
+        });
 
         jButtonRemoveUser.setText("Remove Usuário");
+        jButtonRemoveUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoveUserActionPerformed(evt);
+            }
+        });
 
         jButtonSelectUser.setText("Lista Usuários");
+        jButtonSelectUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelectUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,8 +106,40 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOpenAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOpenAddUserActionPerformed
-        // TODO add your handling code here:
+
+        TelaUser telaNovoUsuario = new TelaUser("Incluir");
+        telaNovoUsuario.setVisible(true);
+        
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButtonOpenAddUserActionPerformed
+
+    private void jButtonRemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveUserActionPerformed
+        
+        TelaUser telaNovoUsuario = new TelaUser("Excluir");
+        telaNovoUsuario.setVisible(true);
+        
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jButtonRemoveUserActionPerformed
+
+    private void jButtonEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditUserActionPerformed
+        
+        TelaUser telaNovoUsuario = new TelaUser("Alterar");
+        telaNovoUsuario.setVisible(true);
+        
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jButtonEditUserActionPerformed
+
+    private void jButtonSelectUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelectUserActionPerformed
+        
+        TelaConsultarTabela telaConsultaUsuario = new TelaConsultarTabela("USERS");
+        telaConsultaUsuario.setVisible(true);
+        
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jButtonSelectUserActionPerformed
 
     /**
      * @param args the command line arguments
