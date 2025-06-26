@@ -68,7 +68,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="labelNome" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="nomeCliente" max="32767" attributes="0"/>
+                      <Component id="nomeUsuario" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Component id="errorLabel" alignment="0" max="32767" attributes="0"/>
@@ -87,7 +87,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="nomeCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nomeUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelNome" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -202,7 +202,7 @@
         <Property name="text" type="java.lang.String" value="Nome Completo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="nomeCliente">
+    <Component class="javax.swing.JTextField" name="nomeUsuario">
     </Component>
     <Component class="javax.swing.JLabel" name="labelEmail">
       <Properties>

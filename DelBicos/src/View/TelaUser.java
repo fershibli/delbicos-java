@@ -6,6 +6,8 @@ package View;
 
 import DAO.User;
 import DAO.connectDAO;
+import java.text.ParseException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,7 +55,7 @@ public class TelaUser extends javax.swing.JFrame {
         this.labelId.setVisible(visible);
         this.idUsuario.setVisible(visible);
         this.labelNome.setVisible(visible);
-        this.nomeCliente.setVisible(visible);
+        this.nomeUsuario.setVisible(visible);
         this.labelEmail.setVisible(visible);
         this.emailUsuario.setVisible(visible);
         this.labelCelular.setVisible(visible);
@@ -70,7 +72,7 @@ public class TelaUser extends javax.swing.JFrame {
         this.labelId.setEnabled(enabled);
         this.idUsuario.setEnabled(enabled);
         this.labelNome.setEnabled(enabled);
-        this.nomeCliente.setEnabled(enabled);
+        this.nomeUsuario.setEnabled(enabled);
         this.labelEmail.setEnabled(enabled);
         this.emailUsuario.setEnabled(enabled);
         this.labelCelular.setEnabled(enabled);
@@ -85,7 +87,7 @@ public class TelaUser extends javax.swing.JFrame {
         this.buttonVoltar.setEnabled(enabled);
     }
     
-    User novoUsuario = new User();
+    User usuarioTela = new User();
     boolean senhasIguais = false;
 
     /**
@@ -107,7 +109,7 @@ public class TelaUser extends javax.swing.JFrame {
         confirmaSenha = new javax.swing.JPasswordField();
         buttonVoltar = new javax.swing.JButton();
         labelNome = new javax.swing.JLabel();
-        nomeCliente = new javax.swing.JTextField();
+        nomeUsuario = new javax.swing.JTextField();
         labelEmail = new javax.swing.JLabel();
         emailUsuario = new javax.swing.JTextField();
         labelCelular = new javax.swing.JLabel();
@@ -219,7 +221,7 @@ public class TelaUser extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nomeCliente)
+                        .addComponent(nomeUsuario)
                         .addContainerGap())
                     .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -233,7 +235,7 @@ public class TelaUser extends javax.swing.JFrame {
                     .addComponent(idUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -266,30 +268,102 @@ public class TelaUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
-        if (senhasIguais == false) {
-            JOptionPane.showMessageDialog(this, "As senhas precisam ser iguais");
+        
+        if(operacaoAtivaGlobal.equals("Incluir")){
+            if (senhasIguais == false) {
+                JOptionPane.showMessageDialog(this, "As senhas precisam ser iguais");
+            }
+            try {
+                this.usuarioTela.setNome(this.nomeUsuario.getText());
+                this.usuarioTela.setEmail(this.emailUsuario.getText());
+                this.usuarioTela.setCelular(this.celularUsuario.getText());
+                this.usuarioTela.setSenha(new String(this.senhaUsuario.getPassword()));
+                this.usuarioTela.setAtivo(this.ativoUsuario.isSelected());
+                
+                connectDAO connDAO = new connectDAO();
+                connDAO.connectDB();
+                connDAO.insereRegistroJFBD(this.usuarioTela);
+
+            } catch (IllegalArgumentException err) {        
+                JOptionPane.showMessageDialog(this, err.getMessage());
+                return;
+            }
+
+            JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
+
+            TelaMenuPrincipal telaMenu = new TelaMenuPrincipal();
+            telaMenu.setVisible(true);
+            this.setVisible(false);
+            this.dispose();
         }
-        try {
-            this.novoUsuario.setNumConta(this.contaCliente.getText());
-            this.novoUsuario.setNumAgencia(this.agenciaCliente.getText());
-            this.novoUsuario.setSenha(new String(this.senhaUsuario.getPassword()));
-            this.novoUsuario.setIdCli(Integer.parseInt(this.idUsuario.getText()));
+        
+        
+        if(operacaoAtivaGlobal.equals("Alteração")){
             
+            try {
+                this.usuarioTela.setNome(this.nomeUsuario.getText());
+                this.usuarioTela.setEmail(this.emailUsuario.getText());
+                this.usuarioTela.setCelular(this.celularUsuario.getText());
+                this.usuarioTela.setSenha(new String(this.senhaUsuario.getPassword()));
+                this.usuarioTela.setAtivo(this.ativoUsuario.isSelected());
+                
+                connectDAO connDAO = new connectDAO();
+                connDAO.connectDB();
+                connDAO.alteraRegistroJFBD(this.usuarioTela);
+            } catch (IllegalArgumentException err) {        
+                JOptionPane.showMessageDialog(this, err.getMessage());
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Usuário Alterado!");
+
+            TelaMenuPrincipal telaMenu = new TelaMenuPrincipal();
+            telaMenu.setVisible(true);
+            this.setVisible(false);
+            this.dispose();
+            
+        }
+        
+        
+        if(operacaoAtivaGlobal.equals("Exclusão")){
             connectDAO connDAO = new connectDAO();
             connDAO.connectDB();
-            connDAO.insereRegistroJFBD(this.novoUsuario);
+            connDAO.excluiRegistroJFBD(this.usuarioTela);
+            
+            JOptionPane.showMessageDialog(this, "Usuário Excluído!");
 
-        } catch (IllegalArgumentException err) {        
-            JOptionPane.showMessageDialog(this, err.getMessage());
-            return;
+            TelaMenuPrincipal telaMenu = new TelaMenuPrincipal();
+            telaMenu.setVisible(true);
+            this.setVisible(false);
+            this.dispose();
+            
         }
-
-        JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
         
-        TelaMenuPrincipal telaMenu = new TelaMenuPrincipal();
-        telaMenu.setVisible(true);
-        this.setVisible(false);
-        this.dispose();
+        
+        if(operacaoAtivaGlobal.equals("Alterar") || operacaoAtivaGlobal.equals("Excluir")){
+            connectDAO connDAO = new connectDAO();
+            
+            this.usuarioTela.setId(Integer.parseInt(this.idUsuario.getText()));
+            
+            List<String> dadosSQL = connDAO.consultaRegistroJFBD(this.usuarioTela);
+            
+            this.usuarioTela.importaSQLValues(dadosSQL);
+            
+            // ...
+            
+            this.setAllVisible(true);
+            
+            if (operacaoAtivaGlobal.equals("Excluir")) {
+                buttonCadastrar.setText("Excluir");
+                operacaoAtivaGlobal = "Exclusão";
+                this.setAllEnabled(false);
+                this.buttonVoltar.setEnabled(true);
+                this.buttonCadastrar.setEnabled(true);
+            } else {
+                buttonCadastrar.setText("Alterar");
+                operacaoAtivaGlobal = "Alteração";
+            }
+            
+        }
     }//GEN-LAST:event_cadastrarActionPerformed
 
     private void verificaSenha(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificaSenha
@@ -377,7 +451,7 @@ public class TelaUser extends javax.swing.JFrame {
     private javax.swing.JLabel labelId;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelSenha;
-    private javax.swing.JTextField nomeCliente;
+    private javax.swing.JTextField nomeUsuario;
     private javax.swing.JPasswordField senhaUsuario;
     // End of variables declaration//GEN-END:variables
 }
