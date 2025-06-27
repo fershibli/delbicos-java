@@ -198,8 +198,7 @@ public class TelaUser extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(labelId)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(idUsuario))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -348,7 +347,12 @@ public class TelaUser extends javax.swing.JFrame {
             
             this.usuarioTela.importaSQLValues(dadosSQL);
             
-            // ...
+            this.nomeUsuario.setText(this.usuarioTela.getNome());
+            this.emailUsuario.setText(this.usuarioTela.getEmail());
+            this.celularUsuario.setText(this.usuarioTela.getCelular());
+            this.senhaUsuario.setText(this.usuarioTela.getSenha());
+            this.ativoUsuario.setSelected(this.usuarioTela.isAtivo());
+            this.confirmaSenha.setText(this.usuarioTela.getSenha());
             
             this.setAllVisible(true);
             
