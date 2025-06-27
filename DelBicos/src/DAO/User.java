@@ -11,15 +11,17 @@ import java.util.List;
  * @author Alunos
  * 
  * Baseado na tabela:
+
  * CREATE TABLE USERS (
- *   ID INT AUTO_INCREMENT PRIMARY KEY,
- *   FULL_NAME VARCHAR(100) NOT NULL,
- *   EMAIL VARCHAR(100) UNIQUE NOT NULL,
- *   PHONE VARCHAR(13) UNIQUE NOT NULL,
- *   PASSWORD VARCHAR(255) NOT NULL,
- *   ACTIVE BOOLEAN DEFAULT TRUE,
- *   INDEX ACTIVE_INDEX_USERS (ACTIVE)
+ *     ID INT IDENTITY(1,1) PRIMARY KEY,
+ *     FULL_NAME VARCHAR(100) NOT NULL,
+ *     EMAIL VARCHAR(100) UNIQUE NOT NULL,
+ *     PHONE VARCHAR(13) UNIQUE NOT NULL,
+ *     PASSWORD VARCHAR(255) NOT NULL,
+ *     ACTIVE BIT DEFAULT 1,
  * );
+ * 
+ * CREATE INDEX ACTIVE_INDEX_USERS ON USERS (ACTIVE);
  */
 public class User implements BaseDAO {
     final String tableName = "USERS";
@@ -115,22 +117,34 @@ public class User implements BaseDAO {
 
     @Override
     public String dadosSQLValues() {
+        
+        int ativoBit;
+        if (this.isAtivo()){
+            ativoBit = 1;
+        } else {
+            ativoBit = 0;
+        }
         return "'"
-            + this.getId() + "','"
-            + this.getNome() + "', "
-            + this.getEmail() + ","
-            + this.getCelular()+ ","
-            + this.getSenha()+ ","          
-            + this.isAtivo();
+            + this.getNome() + "', '"
+            + this.getEmail() + "','"
+            + this.getCelular()+ "','"
+            + this.getSenha()+ "',"          
+            + ativoBit;
     }
 
     @Override
     public String alteraDadosSQLValues() {
+        int ativoBit;
+        if (this.isAtivo()){
+            ativoBit = 1;
+        } else {
+            ativoBit = 0;
+        }
         return "FULL_NAME = '" + this.getNome() + "', "
-            + "EMAIL = " + this.getEmail() + ", "
-            + "PHONE = " + this.getCelular()+ ", "
-            + "PASSWORD = " + this.getSenha() + ", "
-            + "ACTIVE = " + this.isAtivo();
+            + "EMAIL = '" + this.getEmail() + "', "
+            + "PHONE = '" + this.getCelular()+ "', "
+            + "PASSWORD = '" + this.getSenha() + "', "
+            + "ACTIVE = " + ativoBit;
     }
 
     @Override
